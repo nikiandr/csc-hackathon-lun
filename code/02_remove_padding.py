@@ -5,7 +5,7 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import os
 from joblib import Parallel
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 
 THRESHOLD = 20
 IMAGE_PATH = Path("../dataset")
@@ -28,9 +28,13 @@ def remove_padding(image):
 
 
 def process_image(filename, start_path, end_path):
-    image = Image.open(start_path / filename)
-    image = remove_padding(image)
-    image.save(end_path / filename)
+    ImageFile.LOAD_TRUNCATED_IMAGES = True
+    try:
+        image = Image.open(start_path / filename)
+        image = remove_padding(image)
+        image.save(end_path / filename)
+    except OSError:
+        pass
 
 
 if __name__ == '__main__':
@@ -39,7 +43,6 @@ if __name__ == '__main__':
     for from_folder, to_folder in path_pairs:
         to_folder.mkdir(parents=True, exist_ok=True)
         files = os.listdir(from_folder)
-        # with ThreadPoolExecutor(100) as exe:
-        Parallel(n_jobs=os.cpu_count())([process_image(filename, from_folder, to_folder) for filename in tqdm(files)])
-
+        # Parallel(n_jobs=os.cpu_count())([process_image(filename, from_folder, to_folder) for filename in tqdm(files)])
+        process_image(files[11280], from_folder, to_folder)
         print(f"Folder {str(TRAIN_PATH)} processed")
