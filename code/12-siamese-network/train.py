@@ -9,6 +9,7 @@ from pathlib import Path
 from datetime import datetime
 from tqdm.auto import tqdm
 import wandb
+import argparse
 
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -17,14 +18,29 @@ import torch
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-
 DATA_PATH = Path("../data")
 COMP_DATA_PATH = Path("../data")
 IMAGE_PATH = Path("../dataset")
 
-BATCH_SIZE = 64
-EPOCHS = 50
-IMG_SIZE = (512, 512)
+parser = argparse.ArgumentParser(description='Train siamese network.')
+parser.add_argument('--batch', dest='batch_size',
+                    default=4, type=int,
+                    help='batch size (default: 4)')
+parser.add_argument('--epochs', dest='epochs',
+                    default=5, type=int,
+                    help='number of epochs (default: 5)')
+parser.add_argument('--width', dest='width',
+                    default=512, type=int,
+                    help='width of input images (default: 512)')
+parser.add_argument('--height', dest='height',
+                    default=512, type=int,
+                    help='height of input images (default: 512)')
+
+args = parser.parse_args()
+
+BATCH_SIZE = args.batch_size
+EPOCHS = args.epochs
+IMG_SIZE = (args.width, args.height)
 
 TRAIN_SPLIT_FILTERED_PATH = DATA_PATH / "train_split_filtered.csv"
 VAL_SPLIT_FILTERED_PATH = DATA_PATH / "val_split_filtered.csv"
