@@ -130,10 +130,13 @@ def train_one_epoch(epoch_index):
     wandb.log({"train_loss": last_loss})
     return last_loss
 
+
 if args.wandb == "":
     wandb.init(project="csc_hackathon_lun", name="siamese_512_50epochs")
 else:
     wandb.init(project="csc_hackathon_lun", name=args.wandb)
+
+print(f"Device: {device}")
 
 best_vloss = 1_000_000.
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
