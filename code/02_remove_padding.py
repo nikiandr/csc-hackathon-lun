@@ -1,9 +1,11 @@
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFile
 import numpy as np
 from pathlib import Path
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import os
+from joblib import Parallel
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 THRESHOLD = 20
 IMAGE_PATH = Path("../dataset")
@@ -32,13 +34,12 @@ def process_image(filename, start_path, end_path):
 
 
 if __name__ == '__main__':
-
-    path_pairs = [(TEST_PATH, TEST_NEW_PATH)]  # [(TRAIN_PATH, TRAIN_NEW_PATH), (TEST_PATH, TEST_NEW_PATH)]
+    path_pairs = [(TRAIN_PATH, TRAIN_NEW_PATH), (TEST_PATH, TEST_NEW_PATH)]
 
     for from_folder, to_folder in path_pairs:
         to_folder.mkdir(parents=True, exist_ok=True)
         files = os.listdir(from_folder)
-        with ThreadPoolExecutor(100) as exe:
-            isok = [exe.submit(process_image, filename, from_folder, to_folder) for filename in tqdm(files)]
+        # with ThreadPoolExecutor(100) as exe:
+        Parallel(n_jobs=os.cpu_count())([process_image(filename, from_folder, to_folder) for filename in tqdm(files)])
 
         print(f"Folder {str(TRAIN_PATH)} processed")
