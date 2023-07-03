@@ -61,6 +61,17 @@ val_transforms = transforms.Compose(
     ]
 )
 
+# TODO: do norm fix with saved local paths problem
+train_split_filtered['image_path1'] = '../' + \
+                    train_split_filtered['image_path1']
+train_split_filtered['image_path2'] = '../' + \
+                    train_split_filtered['image_path2']
+
+val_split_filtered['image_path1'] = '../' + \
+                    val_split_filtered['image_path1']
+val_split_filtered['image_path2'] = '../' + \
+                    val_split_filtered['image_path2']
+
 train_dataset = SiameseNetworkDataset(train_split_filtered,
                                       transform=train_transforms)
 val_dataset = SiameseNetworkDataset(val_split_filtered,
