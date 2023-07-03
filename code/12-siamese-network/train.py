@@ -18,9 +18,9 @@ import torch
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-DATA_PATH = Path("../data")
-COMP_DATA_PATH = Path("../data")
-IMAGE_PATH = Path("../dataset")
+DATA_PATH = Path("../../data")
+COMP_DATA_PATH = Path("../../data")
+IMAGE_PATH = Path("../../dataset")
 
 parser = argparse.ArgumentParser(description='Train siamese network.')
 parser.add_argument('--batch', dest='batch_size',
