@@ -23,6 +23,9 @@ COMP_DATA_PATH = Path("../../data")
 IMAGE_PATH = Path("../../dataset")
 
 parser = argparse.ArgumentParser(description='Train siamese network.')
+parser.add_argument('--wandb', dest='wandb',
+                    default="", type=str,
+                    help='run name (default: "")')
 parser.add_argument('--batch', dest='batch_size',
                     default=4, type=int,
                     help='batch size (default: 4)')
@@ -127,8 +130,11 @@ def train_one_epoch(epoch_index):
     wandb.log({"train_loss": last_loss})
     return last_loss
 
+if args.wandb == "":
+    wandb.init(project="csc_hackathon_lun", name="siamese_512_50epochs")
+else:
+    wandb.init(project="csc_hackathon_lun", name=args.wandb)
 
-wandb.init(project="csc_hackathon_lun", name="siamese_512_50epochs")
 best_vloss = 1_000_000.
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
 for epoch_number in range(EPOCHS):
