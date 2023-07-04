@@ -20,8 +20,8 @@ class SiameseNetworkDataset(Dataset):
 
     def __getitem__(self, index):
         row = self.split_df.iloc[index]
-        img1 = Image.open(row["image_path1"])
-        img2 = Image.open(row["image_path2"])
+        img1 = Image.open(row["image_path1"]).convert('RGB')
+        img2 = Image.open(row["image_path2"]).convert('RGB')
         if self.transform is not None:
             img1 = self.transform(img1)
             img2 = self.transform(img2)
