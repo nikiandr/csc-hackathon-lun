@@ -4,7 +4,7 @@ from pathlib import Path
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
 import os
-from joblib import Parallel
+from joblib import Parallel, delayed
 
 
 THRESHOLD = 20
@@ -43,6 +43,5 @@ if __name__ == '__main__':
     for from_folder, to_folder in path_pairs:
         to_folder.mkdir(parents=True, exist_ok=True)
         files = os.listdir(from_folder)
-        # Parallel(n_jobs=os.cpu_count())([process_image(filename, from_folder, to_folder) for filename in tqdm(files)])
-        process_image(files[11280], from_folder, to_folder)
+        Parallel(n_jobs=os.cpu_count())(delayed(process_image)(filename, from_folder, to_folder) for filename in tqdm(files))
         print(f"Folder {str(TRAIN_PATH)} processed")

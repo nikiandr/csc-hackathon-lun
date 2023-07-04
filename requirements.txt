@@ -6,3 +6,4 @@ tqdm
 Imagehash
 pandarallel
 scikit-learn
+joblib
