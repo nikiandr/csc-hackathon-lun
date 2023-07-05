@@ -7,3 +7,4 @@ Imagehash
 pandarallel
 scikit-learn
 joblib
+scikit-image
