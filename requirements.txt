@@ -8,3 +8,4 @@ pandarallel
 scikit-learn
 joblib
 scikit-image
+opencv-python
