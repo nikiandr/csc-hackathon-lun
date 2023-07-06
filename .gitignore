@@ -201,3 +201,4 @@ $RECYCLE.BIN/
 wandb/
 .obsidian/
 models/
+lightning_logs/
