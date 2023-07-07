@@ -78,10 +78,11 @@ class SiameseResNet(pl.LightningModule):
         loss = self.loss(output1, output2, y)
         # Logging to TensorBoard by default
         self.log("val_loss", loss)
-        dist = torch.abs(output1 - output2)
+        dist = torch.abs(output1 - output2).cpu().numpy()
+        y = y.cpu().numpy()
         res = {}
-        for i in np.arange(torch.min(dist).item(), torch.max(dist).item()):
-            res[i] = f1_score(y, (dist < i).cpu().long(),
+        for i in np.arange(dist.min(), dist.max()):
+            res[i] = f1_score(y, (dist < i).astype(int),
                               labels=[0, 1],
                               zero_division=0)
         threshold = max(res, key=res.get)
