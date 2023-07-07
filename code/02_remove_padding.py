@@ -2,7 +2,6 @@ from PIL import Image, ImageChops, ImageFile
 import numpy as np
 from pathlib import Path
 from tqdm import tqdm
-from concurrent.futures import ThreadPoolExecutor
 import os
 from joblib import Parallel, delayed
 
