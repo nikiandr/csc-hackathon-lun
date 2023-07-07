@@ -81,7 +81,7 @@ class SiameseResNet(pl.LightningModule):
         dist = torch.abs(output1 - output2)
         res = {}
         for i in np.arange(torch.min(dist).item(), torch.max(dist).item()):
-            res[i] = f1_score(y, (dist < i).long(),
+            res[i] = f1_score(y, (dist < i).cpu().long(),
                               labels=[0, 1],
                               zero_division=0)
         threshold = max(res, key=res.get)
