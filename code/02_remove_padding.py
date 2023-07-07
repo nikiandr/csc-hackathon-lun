@@ -15,6 +15,7 @@ TEST_NEW_PATH = IMAGE_PATH / "images_test_unpadded"
 
 
 def remove_padding(image):
+    mode = image.mode
     image = image.convert('RGB')
     background_color = image.getpixel((0,0))
     background = Image.new(image.mode, image.size, background_color)
@@ -22,8 +23,8 @@ def remove_padding(image):
     difference = ImageChops.add(difference, difference, 2.0, -THRESHOLD)
     bbox = difference.getbbox()
     if bbox:
-        return image.crop(bbox)
-    return image
+        image = image.crop(bbox)
+    return image.convert(mode)
 
 
 def process_image(filename, start_path, end_path):

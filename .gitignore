@@ -1,3 +1,4 @@
+*.zip
 dataset/
 env/
 
@@ -200,3 +201,4 @@ $RECYCLE.BIN/
 wandb/
 .obsidian/
 models/
+lightning_logs/
