@@ -50,6 +50,18 @@ TRAIN_SPLIT_FILTERED_PATH = DATA_PATH / "train_split_filtered.csv"
 VAL_SPLIT_FILTERED_PATH = DATA_PATH / "val_split_filtered.csv"
 train_split_filtered = pd.read_csv(TRAIN_SPLIT_FILTERED_PATH)
 val_split_filtered = pd.read_csv(VAL_SPLIT_FILTERED_PATH)
+
+# TODO: do norm fix with saved local paths problem
+train_split_filtered['image_path1'] = '../' + \
+                    train_split_filtered['image_path1']
+train_split_filtered['image_path2'] = '../' + \
+                    train_split_filtered['image_path2']
+
+val_split_filtered['image_path1'] = '../' + \
+                    val_split_filtered['image_path1']
+val_split_filtered['image_path2'] = '../' + \
+                    val_split_filtered['image_path2']
+
 train_transforms = transforms.Compose(
     [
         transforms.Resize((IMG_SIZE)),
@@ -62,9 +74,9 @@ val_transforms = transforms.Compose(
         transforms.ToTensor()
     ]
 )
-train_dataset = SiameseNetworkDataset(train_split_filtered[:20],
+train_dataset = SiameseNetworkDataset(train_split_filtered,
                                       transform=train_transforms)
-val_dataset = SiameseNetworkDataset(val_split_filtered[:20],
+val_dataset = SiameseNetworkDataset(val_split_filtered,
                                     transform=val_transforms)
 train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE,
                               shuffle=True, num_workers=args.num_workers)
@@ -85,7 +97,6 @@ trainer = pl.Trainer(
     limit_train_batches=100,
     max_epochs=100,
     log_every_n_steps=50,
-    accelerator='cpu',
     callbacks=[EarlyStopping(monitor="val_loss", mode="min")],
     logger=wandb_logger)
 
