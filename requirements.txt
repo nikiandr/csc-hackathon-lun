@@ -9,3 +9,5 @@ scikit-learn
 joblib
 scikit-image
 opencv-python
+lightgbm
+pymongo[srv]
