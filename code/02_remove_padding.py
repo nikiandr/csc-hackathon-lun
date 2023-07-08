@@ -10,15 +10,23 @@ THRESHOLD = 20
 IMAGE_PATH = Path("../dataset")
 TRAIN_PATH = IMAGE_PATH / "images_train"
 TEST_PATH = IMAGE_PATH / "images_test"
-TRAIN_NEW_PATH = IMAGE_PATH / "images_train_unpadded"
-TEST_NEW_PATH = IMAGE_PATH / "images_test_unpadded"
+TRAIN_NEW_PATH = IMAGE_PATH / "images_train_unpadded_2"
+TEST_NEW_PATH = IMAGE_PATH / "images_test_unpadded_2"
 
 
 def remove_padding(image):
     mode = image.mode
     image = image.convert('RGB')
-    background_color = image.getpixel((0,0))
-    background = Image.new(image.mode, image.size, background_color)
+    background_color_1 = image.getpixel((0,0))
+    background = Image.new(image.mode, image.size, background_color_1)
+    difference = ImageChops.difference(image, background)
+    difference = ImageChops.add(difference, difference, 2.0, -THRESHOLD)
+    bbox = difference.getbbox()
+    if bbox:
+        image = image.crop(bbox)
+    w, h = image.size
+    background_color_2 = image.getpixel((w-1, h-1))
+    background = Image.new(image.mode, image.size, background_color_2)
     difference = ImageChops.difference(image, background)
     difference = ImageChops.add(difference, difference, 2.0, -THRESHOLD)
     bbox = difference.getbbox()
