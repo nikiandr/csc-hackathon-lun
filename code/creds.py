@@ -1,0 +1,1 @@
+MONGO_SERVER_URL = "mongodb+srv://root:F4lMtAIVQSKHqX0H@cschack.litgnd1.mongodb.net/?retryWrites=true&w=majority"
