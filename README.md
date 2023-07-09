@@ -22,3 +22,25 @@ Presentation for the solution can be found [here](./presentation.pdf).
 
 Same folder also contains some util code for smoother workflow.
 
+### Run
+
+To reproduce the results of the projects, you can use virtual environment with *requirements.txt* file. 
+
+First start with cloning this GitHub repository
+
+To create virtual environment:
+```bash
+python -m venv <venv_name>
+```
+
+To install all the necessary dependencies, first, activate the environment:
+```bash
+source <venv_name>/bin/activate
+```
+
+After that, to install the dependencies run:
+```bash
+pip install -r requirements.txt
+```
+
+All the described steps are described for Linux operating system.
