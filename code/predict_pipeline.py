@@ -142,7 +142,7 @@ class PredictPipeline:
         # print(X_test)
 
         res = self.model.predict_proba(X_test, num_threads=1)[0, 1]
-        return res
+        return res, X_test
 
 
 if __name__ == '__main__':
